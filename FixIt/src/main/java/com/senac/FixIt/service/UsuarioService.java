@@ -62,12 +62,4 @@ public Usuario createUsuario(Usuario usuario) {
         }
         return false;
     }
-    // Método de login - Verifica as credenciais do usuário
-    public Optional<Usuario> loginUsuario(String email, String senha) {
-        Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
-        if (usuario.isPresent() && usuario.get().getSenha().equals(senha)) {
-            return usuario; // Credenciais corretas, retorna o usuário
-        }
-        return Optional.empty(); // Credenciais inválidas
-    }
 }

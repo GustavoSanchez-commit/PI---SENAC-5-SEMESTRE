@@ -54,13 +54,5 @@ public class UsuarioController {
         return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
 
     }
-     // Endpoint para login
-     @PostMapping("/login")
-     public ResponseEntity<Usuario> loginUsuario(@RequestParam String email, @RequestParam String senha) {
-         Optional<Usuario> usuario = usuarioService.loginUsuario(email, senha);
-         if (usuario.isPresent()) {
-             return ResponseEntity.ok(usuario.get());
-         }
-         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-     }
+
 }
