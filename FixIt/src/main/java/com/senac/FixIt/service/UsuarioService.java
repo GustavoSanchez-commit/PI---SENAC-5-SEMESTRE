@@ -28,9 +28,9 @@ public class UsuarioService {
         return usuarioRepository.findById(id);
     }
 
-    // Método para criar um novo usuário com verificação de duplicidade de username
+    // Método para criar um novo usuário com verificação de duplicidade de email
 public Usuario createUsuario(Usuario usuario) {
-    // Verifica se já existe um usuário com o mesmo username
+    // Verifica se já existe um usuário com o mesmo email
     if (usuarioRepository.existsByEmail(usuario.getEmail())) {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email já está em uso.");
     }
@@ -61,5 +61,13 @@ public Usuario createUsuario(Usuario usuario) {
             return true;
         }
         return false;
+    }
+    // Método de login - Verifica as credenciais do usuário
+    public Optional<Usuario> loginUsuario(String email, String senha) {
+        Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
+        if (usuario.isPresent() && usuario.get().getSenha().equals(senha)) {
+            return usuario; // Credenciais corretas, retorna o usuário
+        }
+        return Optional.empty(); // Credenciais inválidas
     }
 }
