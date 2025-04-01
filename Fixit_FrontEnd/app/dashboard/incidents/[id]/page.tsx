@@ -501,24 +501,6 @@ export default function IncidentDetailsPage() {
                       Fechado
                     </Button>
                   </div>
-
-                  <div className="pt-4">
-                    <Label htmlFor="comment">Adicionar Comentário</Label>
-                    <Textarea
-                      id="comment"
-                      placeholder="Adicione informações sobre a atualização do status..."
-                      className="mt-2"
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}
-                    />
-                    <Button
-                      className="mt-2 bg-navy-600 hover:bg-navy-700 text-white"
-                      onClick={handleAddComment}
-                      disabled={!comment.trim()}
-                    >
-                      Adicionar Comentário
-                    </Button>
-                  </div>
                 </div>
               </CardContent>
             </Card>
