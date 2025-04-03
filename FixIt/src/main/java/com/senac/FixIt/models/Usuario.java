@@ -30,9 +30,9 @@ public class Usuario {
     private int id;
     
     @Size(min = 1, max = 75)
-    @Column(name = "nome", nullable = false, length = 75)
+    @Column(name = "name", nullable = false, length = 75)
     @NotBlank
-    private String nome;
+    private String name;
     
     @Column(name = "email", nullable = false, unique = true)  
     @Size(min = 5, max = 50)  

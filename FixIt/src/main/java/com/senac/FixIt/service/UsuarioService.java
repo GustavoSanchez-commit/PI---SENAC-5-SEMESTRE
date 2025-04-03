@@ -59,7 +59,7 @@ public class UsuarioService {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Telefone já está em uso.");
             }
 
-            usuario.setNome(usuarioDetails.getNome());
+            usuario.setName(usuarioDetails.getName());
             usuario.setEmail(usuarioDetails.getEmail());
             usuario.setPassword(usuarioDetails.getPassword());  // Corrigido: "setSenha" → "setPassword"
             usuario.setDepartment(usuarioDetails.getDepartment());  // Corrigido: "setCargo" → "setDepartment"
