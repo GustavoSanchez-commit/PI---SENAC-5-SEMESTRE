@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import com.senac.FixIt.models.Usuario;
 import com.senac.FixIt.service.UsuarioService;
 
@@ -20,39 +19,45 @@ public class UsuarioController {
 
     // Endpoint para listar todos os usuários
     @GetMapping
-    public List<Usuario> getAllUsuarios() {
-        return usuarioService.getAllUsuarios();
+    public ResponseEntity<List<Usuario>> getAllUsuarios() {
+        List<Usuario> usuarios = usuarioService.getAllUsuarios();
+        return ResponseEntity.ok(usuarios);
     }
 
     // Endpoint para buscar um usuário por ID
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> getUsuarioById(@PathVariable int id) {
-        Optional<Usuario> usuario = usuarioService.getUsuarioById(id);
-        return usuario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-
+        return usuarioService.getUsuarioById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     // Endpoint para criar um novo usuário
     @PostMapping
     public ResponseEntity<Usuario> createUsuario(@Valid @RequestBody Usuario usuario) {
-        Usuario savedUsuario = usuarioService.createUsuario(usuario);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedUsuario);
+        try {
+            Usuario savedUsuario = usuarioService.createUsuario(usuario);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedUsuario);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     // Endpoint para atualizar um usuário
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> updateUsuario(@PathVariable int id, @Valid @RequestBody Usuario usuarioDetails) {
-        Optional<Usuario> updatedUsuario = usuarioService.updateUsuario(id, usuarioDetails);
-        return updatedUsuario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-
+        return usuarioService.updateUsuario(id, usuarioDetails)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     // Endpoint para deletar um usuário
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUsuario(@PathVariable int id) {
-        boolean deleted = usuarioService.deleteUsuario(id);
-        return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
-
+        if (usuarioService.deleteUsuario(id)) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }

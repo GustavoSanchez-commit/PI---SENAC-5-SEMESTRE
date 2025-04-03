@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,10 +44,15 @@ public class Usuario {
     @Column(name = "password", length = 60, nullable = false)  
     @NotBlank
     @Size(min = 8, max = 20)
-    private String senha;
+    private String password;
     
-    @Column(name = "cargo", nullable = false)
+    @Column(name = "department", nullable = false)
     @NotBlank
-    private String cargo;
+    private String department;
+
+    @Column(name = "telephone", nullable = false, length = 15, unique = true)
+    @NotBlank(message = "O telefone não pode estar em branco")
+    @Pattern(regexp = "^\\(\\d{2}\\) \\d{4,5}-\\d{4}$", message = "O telefone deve estar no formato (XX) XXXXX-XXXX")
+    private String telephone;
 
 }
