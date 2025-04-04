@@ -29,6 +29,7 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
+		<start-class>com.senac.fixit.FixItApplication</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
