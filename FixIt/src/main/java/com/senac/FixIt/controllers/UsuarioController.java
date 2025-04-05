@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import com.senac.FixIt.models.Usuario;
 import com.senac.FixIt.service.UsuarioService;
+import com.senac.FixIt.dto.LoginDTO;
+
 
 @RestController
 @RequestMapping("/usuarios")
@@ -59,5 +61,11 @@ public class UsuarioController {
         }
         return ResponseEntity.notFound().build();
     }
+    
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
+        return usuarioService.login(loginDTO);
+    }
+
 
 }
