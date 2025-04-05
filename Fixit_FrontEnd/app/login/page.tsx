@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { AlertCircle, CheckCircle2 } from "lucide-react"
-import { getCurrentUser, loginUser, initializeAdminUser } from "@/app/lib/auth"
+import { getCurrentUser, loginUser, initializeDefaultUsers } from "@/app/lib/auth"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -24,8 +24,8 @@ export default function LoginPage() {
   const [successMessage, setSuccessMessage] = useState("")
 
   useEffect(() => {
-    // Initialize admin user
-    initializeAdminUser()
+    // Initialize default users
+    initializeDefaultUsers()
 
     // Check if user is already logged in
     const user = getCurrentUser()
@@ -41,13 +41,13 @@ export default function LoginPage() {
     }
   }, [router])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError("")
 
     try {
-      loginUser(email, password)
+      await loginUser(email, password)
       router.push("/dashboard")
     } catch (error: any) {
       setError(error.message || "Email ou senha inválidos. Tente novamente.")
@@ -59,7 +59,7 @@ export default function LoginPage() {
     <div className="flex min-h-screen flex-col bg-slate-50">
       <div className="container flex h-16 items-center py-4">
         <Link href="/" className="flex items-center gap-2">
-          <Image src="/placeholder.svg?height=32&width=32" alt="FixIt Logo" width={32} height={32} />
+          <Image src="/images/LogoFixit.png" alt="FixIt Logo" width={32} height={32} className="rounded-sm" />
           <span className="text-xl font-bold text-navy-700">FixIt</span>
         </Link>
       </div>
@@ -123,6 +123,24 @@ export default function LoginPage() {
                 {isLoading ? "Entrando..." : "Entrar"}
               </Button>
             </form>
+
+            <div className="mt-6 rounded-lg border border-slate-200 p-4">
+              <h3 className="mb-2 text-sm font-medium">Usuários para teste:</h3>
+              <div className="space-y-2 text-xs">
+                <div className="grid grid-cols-2 gap-1">
+                  <div className="font-medium">Administrador:</div>
+                  <div>admin@fixit.com / admin123</div>
+                </div>
+                <div className="grid grid-cols-2 gap-1">
+                  <div className="font-medium">Técnico:</div>
+                  <div>tech@fixit.com / tech123</div>
+                </div>
+                <div className="grid grid-cols-2 gap-1">
+                  <div className="font-medium">Usuário:</div>
+                  <div>user@fixit.com / user123</div>
+                </div>
+              </div>
+            </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
             <div className="text-center text-sm">

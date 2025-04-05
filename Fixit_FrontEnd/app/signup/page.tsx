@@ -13,7 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { AlertCircle } from "lucide-react"
-import { getCurrentUser, registerUser } from "@/app/lib/auth"
+import { getCurrentUser, registerUser, initializeDefaultUsers } from "@/app/lib/auth"
 
 export default function SignupPage() {
   const [name, setName] = useState("")
@@ -28,6 +28,9 @@ export default function SignupPage() {
   const router = useRouter()
 
   useEffect(() => {
+    // Initialize default users
+    initializeDefaultUsers()
+
     // Check if user is already logged in
     const user = getCurrentUser()
     if (user) {
@@ -35,7 +38,7 @@ export default function SignupPage() {
     }
   }, [router])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (!agreeTerms) {
@@ -57,7 +60,7 @@ export default function SignupPage() {
     setError("")
 
     try {
-      registerUser({
+      await registerUser({
         name,
         email,
         telephone,
@@ -77,7 +80,7 @@ export default function SignupPage() {
     <div className="flex min-h-screen flex-col bg-slate-50">
       <div className="container flex h-16 items-center py-4">
         <Link href="/" className="flex items-center gap-2">
-          <Image src="/placeholder.svg?height=32&width=32" alt="FixIt Logo" width={32} height={32} />
+          <Image src="/images/LogoFixit.png" alt="FixIt Logo" width={32} height={32} className="rounded-sm" />
           <span className="text-xl font-bold text-navy-700">FixIt</span>
         </Link>
       </div>

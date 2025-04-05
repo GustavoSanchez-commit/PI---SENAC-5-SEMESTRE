@@ -31,7 +31,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { getCurrentUser, logoutUser, initializeAdminUser, isAdmin } from "@/app/lib/auth"
+import { getCurrentUser, logoutUser, isAdmin, initializeDefaultUsers } from "@/app/lib/auth"
 import { getIncidents } from "@/app/lib/incidents"
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -44,8 +44,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [userInitials, setUserInitials] = useState("U")
 
   useEffect(() => {
-    // Initialize admin user if it doesn't exist
-    initializeAdminUser()
+    // Initialize default users if they don't exist
+    initializeDefaultUsers()
 
     // Check if user is logged in
     const user = getCurrentUser()
@@ -69,9 +69,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     setIsAdminUser(isAdmin())
 
     // Get open incidents count
-    const incidents = getIncidents()
-    const openCount = incidents.filter((inc) => inc.status === "open").length
-    setOpenIncidentsCount(openCount)
+    const fetchIncidents = async () => {
+      const incidents = getIncidents()
+      const openCount = incidents.filter((inc) => inc.status === "open").length
+      setOpenIncidentsCount(openCount)
+    }
+
+    fetchIncidents()
   }, [router])
 
   const isActive = (path: string) => {
@@ -123,7 +127,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           {/* Sidebar header */}
           <div className="flex h-16 items-center justify-between border-b px-4">
             <Link href="/dashboard" className="flex items-center gap-2">
-              <Image src="/placeholder.svg?height=32&width=32" alt="FixIt Logo" width={32} height={32} />
+              <Image src="/images/LogoFixit.png" alt="FixIt Logo" width={32} height={32} className="rounded-sm" />
               <span className="text-xl font-bold text-navy-700">FixIt</span>
             </Link>
             <Button variant="ghost" size="icon" onClick={() => setSidebarOpen(false)} className="md:hidden">
@@ -205,7 +209,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {/* Top header */}
         <header className="flex h-16 items-center justify-between border-b bg-white px-4 md:px-6">
           <Link href="/dashboard" className="flex items-center gap-2 md:hidden">
-            <Image src="/placeholder.svg?height=32&width=32" alt="FixIt Logo" width={32} height={32} />
+            <Image src="/images/LogoFixit.png" alt="FixIt Logo" width={32} height={32} className="rounded-sm" />
             <span className="text-xl font-bold text-navy-700">FixIt</span>
           </Link>
           <div className="flex-1"></div>

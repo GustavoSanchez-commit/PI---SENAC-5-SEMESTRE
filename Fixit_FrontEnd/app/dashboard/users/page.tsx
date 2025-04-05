@@ -52,6 +52,19 @@ export default function UsersPage() {
   const [editUserRole, setEditUserRole] = useState<"admin" | "user" | "technician" | undefined>("user")
   const [editDialogOpen, setEditDialogOpen] = useState(false)
 
+  const loadUsers = async () => {
+    try {
+      const loadedUsers = await getUsers()
+      // Remove passwords for security
+      const usersWithoutPasswords = loadedUsers.map(({ password, ...rest }) => rest) as UserType[]
+      setUsers(usersWithoutPasswords)
+    } catch (error) {
+      console.error("Error loading users:", error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   useEffect(() => {
     // Check if user is admin
     const adminCheck = isAdmin()
@@ -66,14 +79,6 @@ export default function UsersPage() {
     // Load users
     loadUsers()
   }, [router])
-
-  const loadUsers = () => {
-    const loadedUsers = getUsers()
-    // Remove passwords for security
-    const usersWithoutPasswords = loadedUsers.map(({ password, ...rest }) => rest) as UserType[]
-    setUsers(usersWithoutPasswords)
-    setLoading(false)
-  }
 
   const handleCreateTechnician = (e: React.FormEvent) => {
     e.preventDefault()

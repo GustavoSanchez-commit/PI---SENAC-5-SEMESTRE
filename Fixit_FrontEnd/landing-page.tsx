@@ -31,7 +31,7 @@ export default function LandingPage() {
             }}
             className="flex items-center gap-2 cursor-pointer"
           >
-            <Image src="/placeholder.svg?height=32&width=32" alt="FixIt Logo" width={32} height={32} />
+            <Image src="/images/LogoFixit.png" alt="FixIt Logo" width={32} height={32} className="rounded-sm" />
             <span className="text-xl font-bold text-navy-700">FixIt</span>
           </a>
           <nav className="hidden md:flex items-center gap-6">
@@ -79,7 +79,7 @@ export default function LandingPage() {
                     Iniciar Teste Gratuito <ChevronRight className="h-4 w-4" />
                   </Button>
                   <Button size="lg" variant="outline" className="text-navy-600 border-navy-200 hover:bg-navy-50">
-                    Ver Demonstração
+                    <Link href="https://www.youtube.com/watch?v=7WFC_1UFadU" target="_blank">Ver Demonstração</Link>
                   </Button>
                 </div>
                 <p className="text-xs text-slate-500">
@@ -87,7 +87,7 @@ export default function LandingPage() {
                 </p>
               </div>
               <Image
-                src="/placeholder.svg?height=550&width=550"
+                src="https://img.freepik.com/free-vector/flat-customer-support-illustration_23-2148899114.jpg?semt=ais_hybrid&w=740"
                 width={550}
                 height={550}
                 alt="Dashboard de Helpdesk"
@@ -401,7 +401,7 @@ export default function LandingPage() {
             }}
             className="flex items-center gap-2 cursor-pointer"
           >
-            <Image src="/placeholder.svg?height=32&width=32" alt="FixIt Logo" width={32} height={32} />
+            <Image src="/images/LogoFixit.png" alt="FixIt Logo" width={32} height={32} className="rounded-sm" />
             <span className="text-lg font-bold text-navy-700">FixIt</span>
           </a>
           <div className="flex flex-col items-center gap-4 md:flex-row md:gap-6">
