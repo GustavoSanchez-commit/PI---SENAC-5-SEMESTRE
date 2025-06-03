@@ -37,5 +37,5 @@ Para fins de desenvolvimento e testes, utiliza-se o banco de dados **H2** em mem
    ```
 3. Inicie a aplicação React:
    ```bash
-   npm start
+   npm run dev
    ```
